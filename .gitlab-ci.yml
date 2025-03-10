@@ -1,0 +1,26 @@
+# noinspection ComposeMissingKeys
+include:
+  - project: 'grit/cicd-templates'
+    ref: main
+    file: '/gitlab/maven-3.9.yml'
+
+image: grit/build-container:temurin-jdk17-maven-3-9
+
+build-feature:
+  extends:
+    - .grit-maven-build-feature
+    - .grit-maven-artifact-upload-jar-fast-expiration
+
+build-main-deploy:
+  extends:
+    - .grit-maven-build-deploy
+    - .grit-maven-artifact-upload-jar-fast-expiration
+
+release:
+  extends:
+    - .grit-maven-build-release
+    - .grit-maven-artifact-upload-jar-fast-expiration
+
+cleanup:
+  extends:
+    - .grit-maven-common-cleanup
